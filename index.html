@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Alchemist - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        /* Custom Scrollbar hide */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Fade transition */
+        .slide-container {
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
+        }
+        .slide-hidden {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full bg-white text-black relative font-sans flex flex-col overflow-x-hidden">
+
+    <main id="main-content" class="flex-grow w-full">
+        </main>
+
+    <div class="w-full p-8 md:fixed md:bottom-0 md:left-0 md:p-12 flex justify-between items-end z-50 bg-white md:bg-transparent mt-auto pointer-events-none">
+        <div id="slide-counter" class="text-xs font-bold tracking-widest opacity-30 text-black">
+            01 / 11
+        </div>
+        
+        <div class="flex gap-4 pointer-events-auto">
+            <button id="prev-btn" onclick="changeSlide(-1)" class="p-4 rounded-full transition-all duration-300 hover:bg-gray-100 opacity-100 text-black">
+                <i data-lucide="arrow-left" class="w-6 h-6"></i>
+            </button>
+            <button id="next-btn" onclick="changeSlide(1)" class="group flex items-center gap-3 pr-6 pl-2 py-2 rounded-full transition-all duration-300 bg-black text-white hover:bg-gray-800 opacity-100">
+                <div class="bg-white text-black rounded-full p-2 group-hover:scale-110 transition-transform">
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </div>
+                <span class="font-bold tracking-widest text-sm pr-2">NEXT</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="fixed top-4 left-4 md:top-8 md:left-12 z-50">
+        <div class="w-6 h-6 md:w-8 md:h-8 bg-black rounded-full"></div>
+    </div>
+    <div class="fixed top-4 right-4 md:top-8 md:right-12 z-50 font-bold tracking-widest text-[10px] md:text-xs hidden md:block text-black">
+        PORTFOLIO 2026
+    </div>
+
+    <script>
+        // --- DATA (You can edit the text inside these quotes!) ---
+        const PORTFOLIO_DATA = {
+            owner: "CREATIVE STRATEGIST",
+            about: {
+                title: "THE STORY",
+                text: "I am a video editor and content strategist obsessed with rhythm and retention. My career has been defined by one goal: stopping the scroll. I blend technical editing precision with a deep understanding of platform psychology to create social assets that don't just get viewed—they get shared."
+            },
+            brands: [
+                {
+                    name: "CLARITIN",
+                    description: "Spring Seasonal Campaign",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNQoRZnu3c5/embed', linkUrl: 'https://www.youtube.com/watch?v=fej6DHfQkrc', title: "Dropping the kid off", views: "19.2M" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNitP6luM1M/embed', linkUrl: 'https://www.youtube.com/watch?v=30SS5xsQzl0', title: "cat mom", views: "34.5K" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DIUbYAgJ5eK/embed', title: "new roommate", views: "26.5K" }
+                    ]
+                },
+                {
+                    name: "CLARITIN",
+                    description: "Virality Week Series",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DK2hjl9sxel/embed', linkUrl: 'https://www.youtube.com/watch?v=46vOQ7mzao0', title: "Sneezatorium Remix", views: "9.6k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DJrooTVu6JR/embed', linkUrl: 'https://www.youtube.com/watch?v=uhiWrysAmts', title: "Sneezatorium Original", views: "26.7k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DJmMiHDOoEd/embed', linkUrl: 'https://www.youtube.com/watch?v=rDTwKZMt9hk', title: "Sneezatorium Remix", views: "17k" }
+                    ],
+                    metrics: [
+                        { label: "Total Series Views", value: "65K" },
+                        { label: "Platform", value: "YouTube, TikTok, Instagram" }
+                    ]
+                },
+                {
+                    name: "ONE A DAY",
+                    description: "Daily Routine Series",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DKkoLaOSt1l/embed', linkUrl: 'https://www.youtube.com/watch?v=dAojAnYbAd4', title: "Pregnancy Cravings", views: "25.9k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DOJ_AONErYV/embed', title: "Mashed Volcano Night", views: "14.7k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DTOHDGskkQ-/embed', title: "Breaking The Border", views: "6.2k" }
+                    ]
+                },
+                {
+                    name: "MIRALAX",
+                    description: "Educational Shorts",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DJr-B27vTLG/embed', title: "family poop tracker", views: "17.6k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DHWoCp6SFuw/embed', title: "which toilet?", views: "4.3k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DM-_psQx7iv/embed', title: "party pooper", views: "3.7k" }
+                    ]
+                },
+                {
+                    name: "MIRALAX",
+                    description: "Content Remix Strategy",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DKc3_2USJzF/embed', title: "Original (Underperformer)", views: "3.4k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DPB6-gejUVF/embed', title: "Remix (Overperformer)", views: "122k" }
+                    ],
+                    metrics: [
+                        { label: "Performance Lift", value: "+3,488%" },
+                        { label: "View Multiplier", value: "35x Increase" },
+                        { label: "Strategy", value: "Retention Editing" }
+                    ]
+                },
+                {
+                    name: "MIRALAX",
+                    description: "Visual Identity",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/p/DGCAs_Wy4EJ/embed', title: "Mimicking Sensitive Content UI", views: "Design" },
+                        { type: 'instagram', url: 'https://www.instagram.com/p/DG3Vle1P9pY/embed', title: "Haptic Scroll Effect", views: "Design" }
+                    ]
+                },
+                {
+                    name: "MIRALAX",
+                    description: "Series: \"Let's Talk Sh*t\"",
+                    context: "A man-on-the-street series that takes the taboo topic of constipation out of the bathroom and onto the streets.",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DMI15cZyXgj/embed', title: "Episode 1", views: "3k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNY2JzkSwZL/embed', title: "Episode 2", views: "1.4k" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNqcNHht8GS/embed', title: "Episode 3", views: "2.2k" }
+                    ],
+                    metrics: [
+                        { label: "Total Series Views", value: "16.2K" },
+                        { label: "Format", value: "Street Interview" }
+                    ]
+                },
+                {
+                    name: "FLEX SEAL",
+                    description: "Viral Challenge Edits",
+                    assets: [
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/B4VCoOUFrUV/embed', title: "Phil Swift as the Terminator", views: "22.7k", metricLabel: "LIKES" },
+                        { type: 'instagram', url: 'https://www.instagram.com/reel/CP8W_HuJe4v/embed', title: "Father's day promo", views: "26.7k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/Rjc7d1yS4Y0', title: "YouTube Rewind 2019", views: "450k" }
+                    ]
+                }
+            ]
+        };
+
+        // --- RENDER LOGIC ---
+        let currentSlide = 0;
+        // 1 Title + 1 About + Brands + 1 Contact
+        const totalSlides = 2 + PORTFOLIO_DATA.brands.length + 1;
+
+        function renderSlide(index) {
+            const container = document.getElementById('main-content');
+            let html = '';
+
+            if (index === 0) {
+                // TITLE SLIDE
+                html = `
+                <div class="min-h-[80vh] md:h-full w-full flex flex-col justify-center items-start px-6 md:px-24 max-w-7xl mx-auto py-12 md:py-0 slide-container">
+                    <div class="overflow-hidden mb-4">
+                        <p class="text-sm md:text-base font-bold tracking-[0.2em] text-gray-400 uppercase animate-pulse">Marketing & Advertising Portfolio</p>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter leading-[0.9] mb-4 text-black">VISUAL<br/>ALCHEMIST</h1>
+                    <p class="text-base md:text-lg font-bold text-gray-500 mb-8 tracking-wide">By Isaac Cabrera</p>
+                    <p class="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 max-w-xl leading-tight">Crafting high-retention social content for the world's biggest health & lifestyle brands.</p>
+                    <div class="mt-12 animate-bounce flex items-center gap-2 text-xs font-bold tracking-widest text-gray-400">
+                        <span class="md:hidden">SCROLL TO BEGIN</span>
+                        <span class="hidden md:block">CLICK NEXT TO BEGIN</span>
+                    </div>
+                </div>`;
+            } 
+            else if (index === 1) {
+                // ABOUT SLIDE
+                html = `
+                <div class="min-h-[80vh] md:h-full w-full flex flex-col justify-center items-start px-6 md:px-24 max-w-7xl mx-auto py-12 md:py-0 slide-container">
+                    <h2 class="text-4xl md:text-6xl font-black mb-8 md:mb-12 tracking-tighter text-black">${PORTFOLIO_DATA.about.title}</h2>
+                    <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                        <div class="md:w-2/3">
+                            <p class="text-xl md:text-2xl lg:text-4xl font-bold leading-tight md:indent-12 text-black">${PORTFOLIO_DATA.about.text}</p>
+                        </div>
+                        <div class="md:w-1/3 border-t-4 border-black pt-6">
+                            <p class="font-bold text-sm tracking-widest mb-4 text-black">CORE COMPETENCIES</p>
+                            <ul class="space-y-2 text-lg font-bold text-gray-500">
+                                <li>Video Editing</li><li>Viral Strategy</li><li>Retention Optimization</li><li>Brand Storytelling</li><li>Motion Graphics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`;
+            } 
+            else if (index > 1 && index < totalSlides - 1) {
+                // BRAND SLIDE
+                const brand = PORTFOLIO_DATA.brands[index - 2];
+                const colClass = brand.assets.length === 2 ? "md:grid-cols-2 max-w-4xl mx-auto" : "md:grid-cols-3";
+                
+                let assetsHtml = brand.assets.map((asset, i) => {
+                    let mediaContent = '';
+                    if (asset.type === 'image_link') {
+                        mediaContent = `<a href="${asset.url}" target="_blank" class="block w-full h-full relative group"><img src="${asset.thumbnail}" class="w-full h-full object-cover"/><div class="absolute bottom-4 left-4 bg-black/80 text-white text-[10px] font-bold px-2 py-1 tracking-widest z-20">VIEW</div></a>`;
+                    } else if (asset.type === 'instagram') {
+                        mediaContent = `<div class="w-full h-full absolute inset-0 overflow-hidden bg-white"><div class="w-full h-full" style="transform: scale(1.45); transform-origin: center center;"><iframe src="${asset.url}" class="w-full h-full object-cover" frameborder="0" scrolling="no" allow="encrypted-media"></iframe></div><div class="absolute top-0 left-0 w-full h-12 bg-transparent z-10 pointer-events-none"></div><div class="absolute bottom-0 left-0 w-full h-12 bg-transparent z-10 pointer-events-none"></div></div>`;
+                    } else if (asset.type === 'youtube') {
+                        mediaContent = `<div class="w-full h-full absolute inset-0 bg-black"><iframe src="${asset.url}?rel=0&playsinline=1" class="w-full h-full object-cover" frameborder="0" allowfullscreen></iframe></div>`;
+                    }
+
+                    return `
+                    <div class="flex flex-col gap-4 md:gap-6">
+                        <div class="aspect-[9/16] bg-black rounded-lg relative overflow-hidden shadow-xl w-full">
+                            ${mediaContent}
+                        </div>
+                        <div class="flex flex-col border-t-2 border-black pt-4">
+                            ${asset.linkUrl ? `<a href="${asset.linkUrl}" target="_blank" class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-1 hover:text-black transition-colors">${asset.title}</a>` : `<span class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-1">${asset.title}</span>`}
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl md:text-4xl font-black text-black">${asset.views}</span>
+                                ${asset.views !== "Design" ? `<span class="text-xs md:text-sm font-bold text-gray-500">${asset.metricLabel || "VIEWS"}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+
+                let metricsHtml = '';
+                if (brand.metrics) {
+                    metricsHtml = `<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4 border-t-2 border-gray-200 pt-6">
+                        ${brand.metrics.map(m => `<div class="text-left"><p class="text-xs md:text-sm font-bold text-gray-400 tracking-widest mb-1 uppercase">${m.label}</p><p class="text-lg md:text-xl lg:text-3xl font-black text-black">${m.value}</p></div>`).join('')}
+                    </div>`;
+                }
+
+                html = `
+                <div class="w-full flex flex-col pt-12 md:pt-20 px-6 md:px-24 max-w-7xl mx-auto pb-8 md:pb-32 slide-container">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b-2 border-gray-100 pb-8">
+                        <div>
+                            <h2 class="text-4xl md:text-5xl lg:text-8xl font-black tracking-tighter mb-2 text-black break-words">${brand.name}</h2>
+                            <p class="text-lg md:text-xl font-bold text-gray-400">${brand.description}</p>
+                        </div>
+                        <div class="hidden md:block text-right">
+                            <p class="text-xs font-bold tracking-widest text-gray-400">PROJECT TYPE</p>
+                            <p class="text-lg font-bold text-black">Social Media Campaign</p>
+                        </div>
+                    </div>
+                    ${brand.context ? `<div class="mb-8 max-w-3xl"><p class="text-base md:text-lg lg:text-xl font-medium text-gray-600 leading-relaxed border-l-4 border-black pl-4">${brand.context}</p></div>` : ''}
+                    <div class="grid grid-cols-1 ${colClass} gap-8 md:gap-12 mb-8">${assetsHtml}</div>
+                    ${metricsHtml}
+                </div>`;
+            } 
+            else {
+                // CONTACT SLIDE
+                html = `
+                <div class="min-h-[80vh] md:h-full w-full flex flex-col justify-center items-center px-6 text-center slide-container">
+                    <h2 class="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-black">READY TO SCALE?</h2>
+                    <p class="text-lg md:text-xl lg:text-2xl font-bold text-gray-400 max-w-lg mb-12">Let's create content that defines your brand's digital presence.</p>
+                    <a href="mailto:icabr003@gmail.com" class="bg-black text-white text-lg md:text-xl lg:text-2xl font-bold py-4 px-8 md:py-6 md:px-12 rounded-full hover:scale-105 transition-transform">GET IN TOUCH</a>
+                </div>`;
+            }
+
+            container.innerHTML = html;
+            updateNav();
+            lucide.createIcons(); // Refresh icons
+            window.scrollTo(0,0);
+        }
+
+        function updateNav() {
+            document.getElementById('slide-counter').innerText = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+            
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (currentSlide === 0) {
+                prevBtn.classList.add('opacity-0');
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.classList.remove('opacity-0');
+                prevBtn.disabled = false;
+            }
+
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.classList.add('opacity-0');
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.classList.remove('opacity-0');
+                nextBtn.disabled = false;
+            }
+        }
+
+        function changeSlide(direction) {
+            const newSlide = currentSlide + direction;
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                currentSlide = newSlide;
+                renderSlide(currentSlide);
+            }
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        // Initialize
+        renderSlide(0);
+    </script>
+</body>
+</html>
