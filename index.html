@@ -209,7 +209,21 @@
                     if (asset.type === 'image_link') {
                         mediaContent = `<a href="${asset.url}" target="_blank" class="block w-full h-full relative group"><img src="${asset.thumbnail}" class="w-full h-full object-cover"/><div class="absolute bottom-4 left-4 bg-black/80 text-white text-[10px] font-bold px-2 py-1 tracking-widest z-20">VIEW</div></a>`;
                     } else if (asset.type === 'instagram') {
-                        mediaContent = `<div class="w-full h-full absolute inset-0 overflow-hidden bg-white"><div class="w-full h-full" style="transform: scale(1.45); transform-origin: center center;"><iframe src="${asset.url}" class="w-full h-full object-cover" frameborder="0" scrolling="no" allow="encrypted-media"></iframe></div><div class="absolute top-0 left-0 w-full h-12 bg-transparent z-10 pointer-events-none"></div><div class="absolute bottom-0 left-0 w-full h-12 bg-transparent z-10 pointer-events-none"></div></div>`;
+                        // INSTAGRAM FIX FOR MOBILE: Removed overlays, added playsinline, removed zoom scale
+                        mediaContent = `
+                        <div class="w-full h-full absolute inset-0 overflow-hidden bg-white">
+                            <div class="w-full h-full" style="transform: scale(1.0); transform-origin: center center;">
+                                <iframe 
+                                    src="${asset.url}/captioned" 
+                                    class="w-full h-full object-cover" 
+                                    frameborder="0" 
+                                    scrolling="no" 
+                                    allow="autoplay; encrypted-media; picture-in-picture; clipboard-write" 
+                                    allowtransparency="true"
+                                    playsinline
+                                ></iframe>
+                            </div>
+                        </div>`;
                     } else if (asset.type === 'youtube') {
                         mediaContent = `<div class="w-full h-full absolute inset-0 bg-black"><iframe src="${asset.url}?rel=0&playsinline=1" class="w-full h-full object-cover" frameborder="0" allowfullscreen></iframe></div>`;
                     }
