@@ -28,6 +28,21 @@
             transition: opacity 0.5s ease-in-out;
             opacity: 1;
         }
+
+        /* Menu Overlay Transition */
+        #menu-overlay {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s;
+        }
+        .menu-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .menu-visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="min-h-screen w-full bg-white text-black relative font-sans flex flex-col overflow-x-hidden">
@@ -56,9 +71,28 @@
     <button onclick="goToStart()" class="fixed top-4 left-4 md:top-8 md:left-12 z-50 hover:scale-110 transition-transform cursor-pointer" aria-label="Go to start">
         <div class="w-6 h-6 md:w-8 md:h-8 bg-black rounded-full shadow-lg"></div>
     </button>
-    
-    <div class="fixed top-4 right-4 md:top-8 md:right-12 z-50 font-bold tracking-widest text-[10px] md:text-xs hidden md:block text-black">
+
+    <button onclick="toggleMenu(true)" class="fixed top-4 right-4 md:top-8 md:right-12 z-50 bg-black w-8 h-8 md:w-10 md:h-10 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform" aria-label="Open Menu">
+        <i data-lucide="menu" class="text-white w-5 h-5"></i>
+    </button>
+
+    <div class="fixed top-14 right-4 md:top-20 md:right-12 z-40 font-bold tracking-widest text-[10px] md:text-xs hidden md:block text-black">
         PORTFOLIO 2026
+    </div>
+
+    <div id="menu-overlay" class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center menu-hidden">
+        <button onclick="toggleMenu(false)" class="absolute top-4 right-4 md:top-8 md:right-12 text-white hover:scale-110 transition-transform" aria-label="Close Menu">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <nav class="flex flex-col gap-6 text-center">
+            <button onclick="jumpToSlideName('about')" class="text-2xl md:text-4xl font-black text-white hover:text-gray-400 transition-colors tracking-tighter">My Story</button>
+            <button onclick="jumpToBrand('CLARITIN')" class="text-2xl md:text-4xl font-black text-white hover:text-gray-400 transition-colors tracking-tighter">Claritin</button>
+            <button onclick="jumpToBrand('ONE A DAY')" class="text-2xl md:text-4xl font-black text-white hover:text-gray-400 transition-colors tracking-tighter">One A Day</button>
+            <button onclick="jumpToBrand('MIRALAX')" class="text-2xl md:text-4xl font-black text-white hover:text-gray-400 transition-colors tracking-tighter">MiraLAX</button>
+            <button onclick="jumpToBrand('TEAM GARYVEE')" class="text-2xl md:text-4xl font-black text-white hover:text-gray-400 transition-colors tracking-tighter">Team GaryVee</button>
+            <button onclick="jumpToBrand('FLEX SEAL')" class="text-2xl md:text-4xl font-black text-white hover:text-gray-400 transition-colors tracking-tighter">Flex Seal</button>
+            <button onclick="jumpToSlideName('contact')" class="text-2xl md:text-4xl font-black text-white hover:text-gray-400 transition-colors tracking-tighter">Get In Touch</button>
+        </nav>
     </div>
 
     <script>
@@ -76,7 +110,7 @@
                     assets: [
                         { type: 'youtube', url: 'https://www.youtube.com/embed/fej6DHfQkrc', linkUrl: 'https://www.youtube.com/watch?v=fej6DHfQkrc', title: "Dropping the kid off", views: "19.2M" },
                         { type: 'youtube', url: 'https://www.youtube.com/embed/30SS5xsQzl0', linkUrl: 'https://www.youtube.com/watch?v=30SS5xsQzl0', title: "cat mom", views: "34.5K" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DIUbYAgJ5eK/embed', title: "new roommate", views: "26.5K" }
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/UkFy6T0i-cI', linkUrl: 'https://www.instagram.com/reel/DIUbYAgJ5eK/', title: "new roommate", views: "26.5K" }
                     ]
                 },
                 {
@@ -97,7 +131,7 @@
                     description: "Daily Routine Series",
                     assets: [
                         { type: 'youtube', url: 'https://www.youtube.com/embed/dAojAnYbAd4', linkUrl: 'https://www.youtube.com/watch?v=dAojAnYbAd4', title: "Pregnancy Cravings", views: "25.9k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DOJ_AONErYV/embed', title: "Mashed Volcano Night", views: "14.7k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/OZZf74SZPwo', linkUrl: 'https://www.instagram.com/reel/DOJ_AONErYV/', title: "Mashed Volcano Night", views: "14.7k" },
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DTOHDGskkQ-/embed', title: "Breaking The Border", views: "6.2k" }
                     ]
                 },
@@ -106,8 +140,8 @@
                     description: "Educational Shorts",
                     assets: [
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DJr-B27vTLG/embed', title: "family poop tracker", views: "17.6k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DHWoCp6SFuw/embed', title: "which toilet?", views: "4.3k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DM-_psQx7iv/embed', title: "party pooper", views: "3.7k" }
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/f0BDp0kp7bU', linkUrl: 'https://www.instagram.com/reel/DHWoCp6SFuw/', title: "which toilet?", views: "4.3k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/fn0yfXzBbtE', linkUrl: 'https://www.instagram.com/reel/DM-_psQx7iv/', title: "party pooper", views: "3.7k" }
                     ]
                 },
                 {
@@ -115,7 +149,7 @@
                     description: "Content Remix Strategy: Optimization",
                     assets: [
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DKc3_2USJzF/embed', title: "Original (Underperformer)", views: "3.4k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DPB6-gejUVF/embed', title: "Remix (Overperformer)", views: "122k" }
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/7ZhDXV4OqME', linkUrl: 'https://www.instagram.com/reel/DPB6-gejUVF/', title: "Remix (Overperformer)", views: "122k" }
                     ],
                     metrics: [
                         { label: "Performance Lift", value: "+3,488%" },
@@ -136,9 +170,9 @@
                     description: "Series: \"Let's Talk Sh*t\"",
                     context: "A man-on-the-street series that takes the taboo topic of constipation out of the bathroom and onto the streets to prove how common the struggle really is.",
                     assets: [
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DMI15cZyXgj/embed', title: "Episode 1", views: "3k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNY2JzkSwZL/embed', title: "Episode 2", views: "1.4k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNqcNHht8GS/embed', title: "Episode 3", views: "2.2k" }
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/3zPoJE-DVz8', linkUrl: 'https://www.instagram.com/reel/DMI15cZyXgj/', title: "Episode 1", views: "3k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/-ehMLXrWLlE', linkUrl: 'https://www.instagram.com/reel/DNY2JzkSwZL/', title: "Episode 2", views: "1.4k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/Zsl7m_Mtoxk', linkUrl: 'https://www.instagram.com/reel/DNqcNHht8GS/', title: "Episode 3", views: "2.2k" }
                     ],
                     metrics: [
                         { label: "Total Series Views", value: "16.2K" },
@@ -154,24 +188,49 @@
                         { type: 'youtube', url: 'https://www.youtube.com/embed/Rjc7d1yS4Y0', title: "YouTube Rewind 2019", views: "450k" }
                     ]
                 }
-            ]
+            ],
+            garyVee: {
+                name: "TEAM GARYVEE",
+                description: "Platform Strategy Producer (2022-2023)",
+                summary: "Analyzed, ideated, produced, and created content for his personal brand efficiently.",
+                platforms: [
+                    { name: "Instagram", url: "https://www.instagram.com/garyvee/" },
+                    { name: "TikTok", url: "https://www.tiktok.com/@garyvee" },
+                    { name: "Facebook", url: "https://www.facebook.com/gary" },
+                    { name: "LinkedIn", url: "https://www.linkedin.com/in/garyvaynerchuk/" }
+                ]
+            }
         };
 
-        // --- RENDER LOGIC ---
-        let currentSlide = 0;
-        const totalSlides = 2 + PORTFOLIO_DATA.brands.length + 1;
+        // --- PREPARE SLIDES ARRAY ---
+        // We split the brands to insert GaryVee before Flex Seal
+        const flexSealIndex = PORTFOLIO_DATA.brands.findIndex(b => b.name === "FLEX SEAL");
+        const brandsBeforeFlex = PORTFOLIO_DATA.brands.slice(0, flexSealIndex);
+        const flexSealBrand = PORTFOLIO_DATA.brands[flexSealIndex];
 
+        // Construct the master list of slides
+        const SLIDES = [
+            { type: 'title' },
+            { type: 'about' },
+            ...brandsBeforeFlex.map(brand => ({ type: 'brand', data: brand })),
+            { type: 'garyvee', data: PORTFOLIO_DATA.garyVee },
+            { type: 'brand', data: flexSealBrand },
+            { type: 'contact' }
+        ];
+
+        let currentSlide = 0;
+        const totalSlides = SLIDES.length;
+
+        // --- RENDER LOGIC ---
         function renderSlide(index) {
             const container = document.getElementById('main-content');
+            const slide = SLIDES[index];
             let html = '';
 
-            if (index === 0) {
-                // TITLE SLIDE
+            if (slide.type === 'title') {
                 html = `
                 <div class="min-h-[80vh] md:h-full w-full flex flex-col justify-center items-start px-6 md:px-24 max-w-7xl mx-auto py-12 md:py-0 slide-container">
-                    <div class="overflow-hidden mb-4">
-                        <p class="text-sm md:text-base font-bold tracking-[0.2em] text-gray-400 uppercase animate-pulse">Marketing & Advertising Portfolio</p>
-                    </div>
+                    <div class="overflow-hidden mb-4"><p class="text-sm md:text-base font-bold tracking-[0.2em] text-gray-400 uppercase animate-pulse">Marketing & Advertising Portfolio</p></div>
                     <h1 class="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter leading-[0.9] mb-4 text-black">VISUAL<br/>ALCHEMIST</h1>
                     <p class="text-base md:text-lg font-bold text-gray-500 mb-8 tracking-wide">By Isaac Cabrera</p>
                     <p class="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 max-w-xl leading-tight">Crafting high-retention social content for the world's biggest health & lifestyle brands.</p>
@@ -181,27 +240,76 @@
                     </div>
                 </div>`;
             } 
-            else if (index === 1) {
-                // ABOUT SLIDE
+            else if (slide.type === 'about') {
                 html = `
-                <div class="min-h-[80vh] md:h-full w-full flex flex-col justify-center items-start px-6 md:px-24 max-w-7xl mx-auto py-12 md:py-0 slide-container">
+                <div class="min-h-screen w-full flex flex-col justify-start items-start px-6 md:px-24 max-w-7xl mx-auto pt-32 pb-24 md:pt-48 slide-container">
                     <h2 class="text-4xl md:text-6xl font-black mb-8 md:mb-12 tracking-tighter text-black">${PORTFOLIO_DATA.about.title}</h2>
-                    <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                    <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start w-full">
                         <div class="md:w-2/3">
                             <p class="text-xl md:text-2xl lg:text-4xl font-bold leading-tight md:indent-12 text-black">${PORTFOLIO_DATA.about.text}</p>
                         </div>
-                        <div class="md:w-1/3 border-t-4 border-black pt-6">
-                            <p class="font-bold text-sm tracking-widest mb-4 text-black">CORE COMPETENCIES</p>
-                            <ul class="space-y-2 text-lg font-bold text-gray-500">
-                                <li>Video Editing</li><li>Viral Strategy</li><li>Retention Optimization</li><li>Brand Storytelling</li><li>Motion Graphics</li>
-                            </ul>
+                        <div class="w-full md:w-1/3 flex flex-col gap-8">
+                            <div class="border-t-4 border-black pt-6">
+                                <p class="font-bold text-sm tracking-widest mb-4 text-black">CORE COMPETENCIES</p>
+                                <ul class="space-y-2 text-lg font-bold text-gray-500">
+                                    <li>Platform Format Expert</li><li>Video Editing</li><li>Viral Strategy</li><li>Retention Optimization</li><li>Brand Storytelling</li><li>Graphic Design</li>
+                                </ul>
+                            </div>
+                            <div class="border-t-4 border-black pt-6">
+                                <p class="font-bold text-sm tracking-widest mb-4 text-black">BRANDS</p>
+                                <ul class="space-y-2 text-lg font-bold text-gray-500">
+                                    <li onclick="jumpToBrand('CLARITIN')" class="hover:text-black cursor-pointer transition-colors duration-200 flex items-center group">Claritin <i data-lucide="arrow-right" class="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i></li>
+                                    <li onclick="jumpToBrand('ONE A DAY')" class="hover:text-black cursor-pointer transition-colors duration-200 flex items-center group">One A Day <i data-lucide="arrow-right" class="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i></li>
+                                    <li onclick="jumpToBrand('MIRALAX')" class="hover:text-black cursor-pointer transition-colors duration-200 flex items-center group">MiraLAX <i data-lucide="arrow-right" class="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i></li>
+                                    <li onclick="jumpToBrand('TEAM GARYVEE')" class="hover:text-black cursor-pointer transition-colors duration-200 flex items-center group">Team GaryVee <i data-lucide="arrow-right" class="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i></li>
+                                    <li onclick="jumpToBrand('FLEX SEAL')" class="hover:text-black cursor-pointer transition-colors duration-200 flex items-center group">Flex Seal <i data-lucide="arrow-right" class="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"></i></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>`;
-            } 
-            else if (index > 1 && index < totalSlides - 1) {
-                // BRAND SLIDE
-                const brand = PORTFOLIO_DATA.brands[index - 2];
+            }
+            else if (slide.type === 'garyvee') {
+                const gv = slide.data;
+                const platformsHtml = gv.platforms.map((p, i) => `
+                    <div class="relative flex md:block w-full md:w-auto items-center ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} md:flex-col">
+                        <div class="w-4 h-4 bg-black rounded-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block"></div>
+                        <div class="w-4 h-4 bg-black rounded-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 md:hidden"></div>
+                        <div class="w-[45%] md:w-auto md:absolute md:left-1/2 md:transform md:-translate-x-1/2 ${i % 2 === 0 ? 'text-right pr-8 md:text-center md:pr-0 md:-top-24 md:pb-8' : 'text-left pl-8 md:text-center md:pl-0 md:top-8 md:pt-8'}">
+                            <a href="${p.url}" target="_blank" class="group inline-block">
+                                <div class="text-2xl md:text-4xl font-black mb-2 group-hover:scale-110 transition-transform duration-300">${p.name}</div>
+                                <div class="text-xs font-bold tracking-widest text-gray-400 group-hover:text-black transition-colors">VIEW PROFILE <i data-lucide="external-link" class="inline ml-1 w-3 h-3"></i></div>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+
+                html = `
+                <div class="w-full flex flex-col pt-12 md:pt-20 px-6 md:px-24 max-w-7xl mx-auto pb-8 md:pb-32 h-full justify-center slide-container">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b-2 border-gray-100 pb-8">
+                        <div>
+                            <h2 class="text-4xl md:text-5xl lg:text-8xl font-black tracking-tighter mb-2 text-black break-words">${gv.name}</h2>
+                            <p class="text-lg md:text-xl font-bold text-gray-400">${gv.description}</p>
+                        </div>
+                        <div class="hidden md:block text-right">
+                            <p class="text-xs font-bold tracking-widest text-gray-400">TOTAL DURATION</p>
+                            <p class="text-lg font-bold text-black">2 Years</p>
+                        </div>
+                    </div>
+                    <div class="relative py-12 md:py-24 flex-grow flex flex-col justify-center">
+                        <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-black transform -translate-y-1/2"></div>
+                        <div class="md:hidden absolute left-1/2 top-0 h-full w-1 bg-black transform -translate-x-1/2"></div>
+                        <div class="flex flex-col md:flex-row justify-between items-center h-full w-full gap-12 md:gap-0">
+                            ${platformsHtml}
+                        </div>
+                    </div>
+                    <div class="mt-8 md:mt-12 text-center max-w-2xl mx-auto">
+                        <p class="text-lg md:text-xl font-bold text-gray-600 leading-relaxed">${gv.summary}</p>
+                    </div>
+                </div>`;
+            }
+            else if (slide.type === 'brand') {
+                const brand = slide.data;
                 const colClass = brand.assets.length === 2 ? "md:grid-cols-2 max-w-4xl mx-auto" : "md:grid-cols-3";
                 
                 let assetsHtml = brand.assets.map((asset, i) => {
@@ -209,7 +317,7 @@
                     if (asset.type === 'image_link') {
                         mediaContent = `<a href="${asset.url}" target="_blank" class="block w-full h-full relative group"><img src="${asset.thumbnail}" class="w-full h-full object-cover"/><div class="absolute bottom-4 left-4 bg-black/80 text-white text-[10px] font-bold px-2 py-1 tracking-widest z-20">VIEW</div></a>`;
                     } else if (asset.type === 'instagram') {
-                        // INSTAGRAM FIX FOR MOBILE: Removed overlays, added playsinline, removed zoom scale
+                        // INSTAGRAM FIX FOR MOBILE
                         mediaContent = `
                         <div class="w-full h-full absolute inset-0 overflow-hidden bg-white">
                             <div class="w-full h-full" style="transform: scale(1.0); transform-origin: center center;">
@@ -267,8 +375,7 @@
                     ${metricsHtml}
                 </div>`;
             } 
-            else {
-                // CONTACT SLIDE
+            else if (slide.type === 'contact') {
                 html = `
                 <div class="min-h-[80vh] md:h-full w-full flex flex-col justify-center items-center px-6 text-center slide-container">
                     <h2 class="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-black">READY TO SCALE?</h2>
@@ -314,16 +421,48 @@
             }
         }
         
-        // New functionality for the Home Button
         function goToStart() {
             currentSlide = 0;
             renderSlide(0);
+        }
+
+        // --- MENU LOGIC ---
+        function toggleMenu(show) {
+            const menu = document.getElementById('menu-overlay');
+            if (show) {
+                menu.classList.remove('menu-hidden');
+                menu.classList.add('menu-visible');
+            } else {
+                menu.classList.remove('menu-visible');
+                menu.classList.add('menu-hidden');
+            }
+        }
+
+        function jumpToSlideName(name) {
+            let targetIndex = 0;
+            if (name === 'about') targetIndex = 1;
+            if (name === 'contact') targetIndex = SLIDES.length - 1;
+            
+            currentSlide = targetIndex;
+            toggleMenu(false);
+            renderSlide(currentSlide);
+        }
+
+        function jumpToBrand(brandName) {
+            // Find the index in the slides array where type is 'brand' or 'garyvee' and name matches
+            const index = SLIDES.findIndex(s => (s.type === 'brand' || s.type === 'garyvee') && s.data.name === brandName);
+            if (index !== -1) {
+                currentSlide = index;
+                toggleMenu(false);
+                renderSlide(currentSlide);
+            }
         }
 
         // Keyboard support
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') changeSlide(1);
             if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'Escape') toggleMenu(false);
         });
 
         // Initialize
