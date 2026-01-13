@@ -28,14 +28,6 @@
             transition: opacity 0.5s ease-in-out;
             opacity: 1;
         }
-        .slide-hidden {
-            opacity: 0;
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
     </style>
 </head>
 <body class="min-h-screen w-full bg-white text-black relative font-sans flex flex-col overflow-x-hidden">
@@ -61,28 +53,29 @@
         </div>
     </div>
 
-    <div class="fixed top-4 left-4 md:top-8 md:left-12 z-50">
-        <div class="w-6 h-6 md:w-8 md:h-8 bg-black rounded-full"></div>
-    </div>
+    <button onclick="goToStart()" class="fixed top-4 left-4 md:top-8 md:left-12 z-50 hover:scale-110 transition-transform cursor-pointer" aria-label="Go to start">
+        <div class="w-6 h-6 md:w-8 md:h-8 bg-black rounded-full shadow-lg"></div>
+    </button>
+    
     <div class="fixed top-4 right-4 md:top-8 md:right-12 z-50 font-bold tracking-widest text-[10px] md:text-xs hidden md:block text-black">
         PORTFOLIO 2026
     </div>
 
     <script>
-        // --- DATA (You can edit the text inside these quotes!) ---
+        // --- DATA ---
         const PORTFOLIO_DATA = {
             owner: "CREATIVE STRATEGIST",
             about: {
-                title: "THE STORY",
-                text: "I am a video editor and content strategist obsessed with rhythm and retention. My career has been defined by one goal: stopping the scroll. I blend technical editing precision with a deep understanding of platform psychology to create social assets that don't just get viewed—they get shared."
+                title: "MY STORY",
+                text: "I’m a video editor and content strategist focused on one thing: capturing attention. My work lives at the intersection of creating, platform behavior, and culture. I design social assets with rhythm, intention, and distribution in mind. Built not just to be watched, but to get shared."
             },
             brands: [
                 {
                     name: "CLARITIN",
                     description: "Spring Seasonal Campaign",
                     assets: [
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNQoRZnu3c5/embed', linkUrl: 'https://www.youtube.com/watch?v=fej6DHfQkrc', title: "Dropping the kid off", views: "19.2M" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DNitP6luM1M/embed', linkUrl: 'https://www.youtube.com/watch?v=30SS5xsQzl0', title: "cat mom", views: "34.5K" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/fej6DHfQkrc', linkUrl: 'https://www.youtube.com/watch?v=fej6DHfQkrc', title: "Dropping the kid off", views: "19.2M" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/30SS5xsQzl0', linkUrl: 'https://www.youtube.com/watch?v=30SS5xsQzl0', title: "cat mom", views: "34.5K" },
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DIUbYAgJ5eK/embed', title: "new roommate", views: "26.5K" }
                     ]
                 },
@@ -90,9 +83,9 @@
                     name: "CLARITIN",
                     description: "Virality Week Series",
                     assets: [
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DK2hjl9sxel/embed', linkUrl: 'https://www.youtube.com/watch?v=46vOQ7mzao0', title: "Sneezatorium Remix", views: "9.6k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DJrooTVu6JR/embed', linkUrl: 'https://www.youtube.com/watch?v=uhiWrysAmts', title: "Sneezatorium Original", views: "26.7k" },
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DJmMiHDOoEd/embed', linkUrl: 'https://www.youtube.com/watch?v=rDTwKZMt9hk', title: "Sneezatorium Remix", views: "17k" }
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/46vOQ7mzao0', linkUrl: 'https://www.youtube.com/watch?v=46vOQ7mzao0', title: "Sneezatorium Remix", views: "9.6k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/uhiWrysAmts', linkUrl: 'https://www.youtube.com/watch?v=uhiWrysAmts', title: "Sneezatorium Original", views: "26.7k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/rDTwKZMt9hk', linkUrl: 'https://www.youtube.com/watch?v=rDTwKZMt9hk', title: "Sneezatorium Remix", views: "17k" }
                     ],
                     metrics: [
                         { label: "Total Series Views", value: "65K" },
@@ -103,7 +96,7 @@
                     name: "ONE A DAY",
                     description: "Daily Routine Series",
                     assets: [
-                        { type: 'instagram', url: 'https://www.instagram.com/reel/DKkoLaOSt1l/embed', linkUrl: 'https://www.youtube.com/watch?v=dAojAnYbAd4', title: "Pregnancy Cravings", views: "25.9k" },
+                        { type: 'youtube', url: 'https://www.youtube.com/embed/dAojAnYbAd4', linkUrl: 'https://www.youtube.com/watch?v=dAojAnYbAd4', title: "Pregnancy Cravings", views: "25.9k" },
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DOJ_AONErYV/embed', title: "Mashed Volcano Night", views: "14.7k" },
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DTOHDGskkQ-/embed', title: "Breaking The Border", views: "6.2k" }
                     ]
@@ -119,7 +112,7 @@
                 },
                 {
                     name: "MIRALAX",
-                    description: "Content Remix Strategy",
+                    description: "Content Remix Strategy: Optimization",
                     assets: [
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DKc3_2USJzF/embed', title: "Original (Underperformer)", views: "3.4k" },
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DPB6-gejUVF/embed', title: "Remix (Overperformer)", views: "122k" }
@@ -132,7 +125,7 @@
                 },
                 {
                     name: "MIRALAX",
-                    description: "Visual Identity",
+                    description: "Visual Identity & Graphic Design",
                     assets: [
                         { type: 'instagram', url: 'https://www.instagram.com/p/DGCAs_Wy4EJ/embed', title: "Mimicking Sensitive Content UI", views: "Design" },
                         { type: 'instagram', url: 'https://www.instagram.com/p/DG3Vle1P9pY/embed', title: "Haptic Scroll Effect", views: "Design" }
@@ -141,7 +134,7 @@
                 {
                     name: "MIRALAX",
                     description: "Series: \"Let's Talk Sh*t\"",
-                    context: "A man-on-the-street series that takes the taboo topic of constipation out of the bathroom and onto the streets.",
+                    context: "A man-on-the-street series that takes the taboo topic of constipation out of the bathroom and onto the streets to prove how common the struggle really is.",
                     assets: [
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DMI15cZyXgj/embed', title: "Episode 1", views: "3k" },
                         { type: 'instagram', url: 'https://www.instagram.com/reel/DNY2JzkSwZL/embed', title: "Episode 2", views: "1.4k" },
@@ -166,7 +159,6 @@
 
         // --- RENDER LOGIC ---
         let currentSlide = 0;
-        // 1 Title + 1 About + Brands + 1 Contact
         const totalSlides = 2 + PORTFOLIO_DATA.brands.length + 1;
 
         function renderSlide(index) {
@@ -306,6 +298,12 @@
                 currentSlide = newSlide;
                 renderSlide(currentSlide);
             }
+        }
+        
+        // New functionality for the Home Button
+        function goToStart() {
+            currentSlide = 0;
+            renderSlide(0);
         }
 
         // Keyboard support
